@@ -17,15 +17,3 @@ Open design questions, deliberately deferred for now.
 ## Node usage
 - `Node` exists (location + visited) but is not yet wired into the N^2 output.
 - Decide how the edge grid gets turned into a graph/grid of `Node`s for traversal.
-
-## EdgeRunner chain semantics
-- `edge_runner` traces only the component containing its seed tile. A grid
-  with several disconnected runs needs the caller to loop, re-seeding while
-  `grid_comparer` is non-empty. Decide where that loop lives (caller, or a
-  wrapper in `edge_runner.py`).
-- A branch point (a tile with 2+ unvisited active neighbours) emits one chain
-  per root-to-leaf path, so branched components produce multiple chains that
-  share a prefix. Decide whether that is the wanted output or whether branches
-  should be merged / split into a single canonical contour.
-- An isolated seed (no active neighbours) emits an empty chain `[]`. Decide
-  whether degenerate single-tile runs should be emitted at all.
