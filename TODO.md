@@ -17,3 +17,11 @@ Open design questions, deliberately deferred for now.
 ## Node usage
 - `Node` exists (location + visited) but is not yet wired into the N^2 output.
 - Decide how the edge grid gets turned into a graph/grid of `Node`s for traversal.
+
+## Shape detection (prerequisite for new edge_runner)
+- Need a way to identify how many distinct "shapes" exist in the activation
+  grid and find each shape's midpoint to use as a seed for the new
+  edge_runner.
+- Open: definition of "shape" (connected component of edges? enclosed
+  non-edge region?), and the midpoint definition (centroid, geometric
+  center, something else).

@@ -74,18 +74,22 @@ def compute_edge_grid(image, weights_path):
     ts = neuron.tile_size
 
     n = H // ts  # grid is n x n  ->  n^2 tiles
-    grid = np.zeros((n, n), dtype=np.int8)
+    # object dtype so each cell holds EITHER int 1 (edge) OR an RGB-mean array
+    grid = np.empty((n, n), dtype=object)
     gridComparer = set()
 
     #actually imp thing:
     for i in range(n):
         for j in range(n):
-            
+
             tile = image[ i*ts : (i + 1)*ts , j*ts : (j + 1)*ts , :]
             edge = neuron.is_edge(tile)
-            grid[i, j] = edge
 
             if edge == 1:
+                grid[i, j] = 1
                 gridComparer.add((i, j))
+            else:
+                # plain mean over the tile's pixels -- no neuron involved
+                grid[i, j] = tile.reshape(-1, tile.shape[-1]).mean(axis=0)
 
     return grid, gridComparer
