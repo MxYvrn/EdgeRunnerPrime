@@ -4,17 +4,6 @@
 
 # The Grid -- Daft Punk, from the TRON: Legacy soundtrack
 
-"""
-Step 1: N^2 Edge Neurons.
-
-Takes a square RGB image, subdivides it into an N x N grid of tiles
-(N^2 tiles total -- hence the name "N^2"), and runs a single trained
-neuron over each tile to decide edge / no-edge.
-
-Neuron arrangement is single-layered for now: N^2 tiles -> 1 neuron.
-The question of how many layers / neurons to use is deferred (see TODO.md).
-"""
-
 import json
 import numpy as np
 

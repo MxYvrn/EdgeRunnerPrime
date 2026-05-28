@@ -1,0 +1,28 @@
+Step 4: EdgeRunner.
+
+Traces boundary paths through the active-tile set left by EdgeFiller
+(Step 3) and records each path as a Directional Freeman Chain Code of
+Eight Directions (DFCCE). A walk begins from a seed popped from the
+active-tile set and steps one tile at a time along any active
+8-neighbour, appending the absolute Freeman direction on the first step
+and the relative turn (abs_dir - prev_dir) % 8 on every step after.
+Tiles are discarded from the active-tile set as they're walked, so the
+same tile isn't re-entered.
+
+Branching (shared prefix): at a tile with multiple active neighbours,
+every neighbour spawns its own continuation that inherits the chain so
+far, so a Y-junction yields several chains that share their common
+prefix.
+
+Termination, two cases, both recorded in global_chain so nothing is
+dropped:
+  - Closure -- the next step would land back on the walk's seed tile
+    and the chain has reached at least `shortner` steps (default 10).
+    The closing turn is appended and the closed chain is recorded.
+  - Dead end -- no active 8-neighbour exists. The chain so far is
+    recorded unchanged.
+
+Two functions live in the file:
+  - edge_filler_checker rebuilds the active-tile set from a filled 0/1
+    grid, for callers that hold the grid but not the set.
+  - edge_runner is the tracer.
